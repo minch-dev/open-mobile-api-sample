@@ -1,10 +1,9 @@
 package org.simalliance.openmobileapi.test;
 
-import org.simalliance.openmobileapi.Channel;
-import org.simalliance.openmobileapi.Reader;
-import org.simalliance.openmobileapi.SEService;
-import org.simalliance.openmobileapi.SEService.CallBack;
-import org.simalliance.openmobileapi.Session;
+import android.se.omapi.Channel;
+import android.se.omapi.Reader;
+import android.se.omapi.SEService;
+import android.se.omapi.Session;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -16,8 +15,8 @@ import android.widget.TextView;
 /**
  * Open Mobile API sample to demonstrate how a Secure Element based
  * Android application can be realized with the G&D SmartCard API .<br>
- * 
- * SmartCard API implements the SIMalliance Open Mobile API ({@link http://www.simalliance.org}).
+ *
+ * SmartCard API implements the SIMalliance Open Mobile API ({@link <a href="https://www.simalliance.org">...</a>}).
  */
 public class MainActivity extends Activity {
 
@@ -65,7 +64,21 @@ public class MainActivity extends Activity {
 		SEServiceCallback callback = new SEServiceCallback();
 		new SEService(this, callback);
 	}
+	/**
+	 * Interface to receive call-backs when the service is connected. If the
+	 * target language and environment allows it, then this shall be an inner
+	 * interface of the SEService class.
+	 */
+	public interface CallBack {
 
+		/**
+		 * Called by the framework when the service is connected.
+		 *
+		 * @param service
+		 *            the connected service.
+		 */
+		void serviceConnected(SEService service);
+	}
 	/**
 	 * Callback interface if informs that this SEService is connected to the SmartCardService
 	 */
