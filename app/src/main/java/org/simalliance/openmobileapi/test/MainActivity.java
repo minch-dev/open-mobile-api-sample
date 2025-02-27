@@ -62,7 +62,7 @@ public class MainActivity extends Activity {
 
 		
 		SEServiceCallback callback = new SEServiceCallback();
-		new SEService(this, callback);
+		new SEService(this,{ it.run() },callback);
 	}
 	/**
 	 * Interface to receive call-backs when the service is connected. If the
