@@ -12,6 +12,8 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import java.util.concurrent.Executors;
+
 /**
  * Open Mobile API sample to demonstrate how a Secure Element based
  * Android application can be realized with the G&D SmartCard API .<br>
@@ -60,32 +62,17 @@ public class MainActivity extends Activity {
 
 		setContentView(layout);
 
-		
-		SEServiceCallback callback = new SEServiceCallback();
-		new SEService(this,{ it.run() },callback);
-	}
-	/**
-	 * Interface to receive call-backs when the service is connected. If the
-	 * target language and environment allows it, then this shall be an inner
-	 * interface of the SEService class.
-	 */
-	public interface CallBack {
 
-		/**
-		 * Called by the framework when the service is connected.
-		 *
-		 * @param service
-		 *            the connected service.
-		 */
-		void serviceConnected(SEService service);
+		SEServiceCallback callback = new SEServiceCallback();
+		_service = new SEService(this, Executors.newSingleThreadExecutor(),callback);
 	}
+
 	/**
 	 * Callback interface if informs that this SEService is connected to the SmartCardService
 	 */
-	public class SEServiceCallback implements CallBack {
+	public class SEServiceCallback implements SEService.OnConnectedListener {
 
-		public void serviceConnected(SEService service) {
-			_service = service;
+		public void onConnected() {
 			performTest();
 		}
 	}
