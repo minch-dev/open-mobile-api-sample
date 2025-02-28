@@ -59,12 +59,12 @@ public class MainActivity extends Activity {
 		_textview.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
 		_scrollview.addView(_textview);
 		layout.addView(_scrollview);
-
 		setContentView(layout);
-
+		logText("Establishing connection to SEService:  \n --- \n");
 
 		SEServiceCallback callback = new SEServiceCallback();
 		_service = new SEService(this, Executors.newSingleThreadExecutor(),callback);
+	//CalledFromWrongThreadException: Only the original thread that created a view hierarchy can touch its views.
 	}
 
 	/**
@@ -73,11 +73,19 @@ public class MainActivity extends Activity {
 	public class SEServiceCallback implements SEService.OnConnectedListener {
 
 		public void onConnected() {
-			performTest();
+			runOnUiThread(new Runnable() {
+				@Override
+				public void run() {
+					//logText("connection established!  \n");
+					performTest();
+				}
+			});
+
 		}
 	}
 
 	private void performTest() {
+		logText("Testing...  \n");
 		Reader[] readers = _service.getReaders();
 		logText("Available readers:  \n");
 		for (Reader reader : readers)
