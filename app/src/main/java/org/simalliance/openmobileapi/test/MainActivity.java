@@ -64,7 +64,6 @@ public class MainActivity extends Activity {
 
 		SEServiceCallback callback = new SEServiceCallback();
 		_service = new SEService(this, Executors.newSingleThreadExecutor(),callback);
-	//CalledFromWrongThreadException: Only the original thread that created a view hierarchy can touch its views.
 	}
 
 	/**
